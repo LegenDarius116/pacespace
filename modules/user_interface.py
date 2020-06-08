@@ -1,12 +1,12 @@
 class UserInterface:
     """A class that mimics an interface for Users"""
-    def __init__(self):
+    def __init__(self, user_id: int, user_name: str):
         raise NotImplementedError
 
     def get_id(self):
         raise NotImplementedError
 
-    def set_id(self, user_id: str):
+    def set_id(self, user_id: int):
         raise NotImplementedError
 
     def get_name(self):
