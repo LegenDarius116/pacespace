@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 class User(ABC):
     """A class that mimics an abstract class for Users"""
     @abstractmethod
-    def __init__(self, user_id: int, user_name: str):
-        self._id = user_id
-        self._name = user_name
+    def __init__(self, id: int, name: str):
+        self._id = id
+        self._name = name
 
     @property
     def id(self) -> int:
