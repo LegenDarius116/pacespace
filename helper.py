@@ -7,6 +7,7 @@
 # user = request.user
 # userTypeIs = userTypeChecker(user)
 def user_typechecker(user):
+    """Checks usertype of user"""
     return lambda user_type: len(user_type.objects.filter(user=user)) > 0
 
 
@@ -27,6 +28,7 @@ symbol_dict = {
 
 
 def parse_req_body(body):
+    """Organizes HTTP Request into a python dictionary"""
     body = body.decode('utf-8')
     pair_list = body.split('&')
     parsed_body = {}
