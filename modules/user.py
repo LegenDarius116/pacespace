@@ -13,14 +13,19 @@ from modules.schoolclass import SchoolClass
 # Abstract UserType model/class
 # use function userTypeChecker
 class UserType(models.Model):
+    """Denotes a user type for our app, which can either be Student or Teacher"""
+
+    # links this class to an actual account
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+    # connects this user to 0 or more classes
     school_classes = models.ManyToManyField(SchoolClass, null=True)
 
     def __str__(self):
         return str(self.user)
 
-    class Meta: # Makes sure it is an abstract user model/class
+    # Makes sure it is an abstract user model/class
+    class Meta:
         abstract = True
 
 

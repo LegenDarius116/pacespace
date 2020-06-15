@@ -17,6 +17,7 @@ def user_directory_path(instance, filename):
 
 # Project is made up of many Missions
 class Mission(models.Model):
+    """A part of a project. Missions cannot exist outside of projects."""
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('C', 'Completed')
@@ -26,7 +27,7 @@ class Mission(models.Model):
         max_length=1,
         choices=STATUS_CHOICES,
         default="A"
-    )   
+    )
 
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
@@ -44,6 +45,9 @@ class Mission(models.Model):
 
 
 class Project(models.Model):
+    """A Project that a Teacher can assign for a SchoolClass.
+    Projects are comprised of at least 1 Mission.
+    """
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('S', 'Submitted'),

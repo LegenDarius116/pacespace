@@ -2,11 +2,12 @@
 # Project: https://github.com/OrenBen-Meir/Meal-Spot
 # Author: orenben-meir (Oren Ben Meir)
 
+
 # in views, use function to check usertype by 
 # user = request.user
 # userTypeIs = userTypeChecker(user)
-def userTypeChecker(user): 
-    return lambda userType: len(userType.objects.filter(user=user)) > 0
+def user_typechecker(user):
+    return lambda user_type: len(user_type.objects.filter(user=user)) > 0
 
 
 # when parsing request's body, hash to dict and convert symbols
@@ -23,6 +24,7 @@ symbol_dict = {
     "%40": "@",
     "%E2": ""
 }
+
 
 def parse_req_body(body):
     body = body.decode('utf-8')
