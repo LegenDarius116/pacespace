@@ -9,6 +9,7 @@ from modules.schoolclass import SchoolClass
 #     school_classes = models.ManyToManyField(SchoolClass, null=True)
 #     reward = models.IntegerField(default=0)
 
+
 # Abstract UserType model/class
 # use function userTypeChecker
 class UserType(models.Model):
@@ -18,10 +19,10 @@ class UserType(models.Model):
 
     def __str__(self):
         return str(self.user)
-    
 
     class Meta: # Makes sure it is an abstract user model/class
         abstract = True
+
 
 class Student(UserType):
     reward = models.IntegerField(default=0)
