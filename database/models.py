@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class SchoolClass(models.Model):
     name = models.CharField(max_length=30)
@@ -14,10 +16,8 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.owner.id, filename)
 
-
 # Project is made up of many Missions
 class Mission(models.Model):
-    """A part of a project. Missions cannot exist outside of projects."""
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('C', 'Completed')
@@ -27,7 +27,7 @@ class Mission(models.Model):
         max_length=1,
         choices=STATUS_CHOICES,
         default="A"
-    )
+    )   
 
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
@@ -43,11 +43,10 @@ class Mission(models.Model):
 
     date_submit = models.DateTimeField(null=True, blank=True)
 
+    
+
 
 class Project(models.Model):
-    """A Project that a Teacher can assign for a SchoolClass.
-    Projects are comprised of at least 1 Mission.
-    """
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('S', 'Submitted'),
@@ -65,8 +64,6 @@ class Project(models.Model):
 
     description_file = models.FileField(upload_to=user_directory_path, null=True, blank=True)
 
-    # maybe these fields can be taken by last mission?
-    # but also it may be that these are separate, as missions are optional
     submission = models.FileField(upload_to=user_directory_path, null=True, blank=True)
 
     date_assign = models.DateTimeField(auto_now_add=True)
@@ -74,3 +71,9 @@ class Project(models.Model):
     date_due = models.DateTimeField(default=timezone.now)
 
     date_submit = models.DateTimeField(null=True, blank=True)
+
+
+class User(AbstractUser):
+    is_student = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
+    school_classes = models.ManyToManyField(SchoolClass)

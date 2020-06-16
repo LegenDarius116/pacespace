@@ -1,0 +1,41 @@
+{% extends "signup_base.html" %}
+{% load static %}
+
+<!-- page css -->
+{% block css %}
+<style>
+
+div.container {
+  max-width:500px;
+  margin: auto;
+  overflow: auto;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- page html -->
+
+<body>
+
+<form method="POST" action="{% url 'signup' %}" style="border:1px solid #ccc">
+  {% csrf_token %}
+
+  <div class="container">
+    <h1>Sign Up</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+
+    <div id ="signup-form">
+      {{ signup_form }}
+    </div>
+    <hr>
+
+    <button type="submit" class="signupbtn">Sign Up</button>
+
+  </div>
+
+</form>
+
+{% endblock %}
