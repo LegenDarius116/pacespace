@@ -55,7 +55,7 @@ class Project(models.Model):
     ]    
 
     status = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=STATUS_CHOICES,
         default="A"
     ) 
