@@ -1,0 +1,33 @@
+body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+h1.welcome {
+    text-align: center;
+    color: white;
+}
+
+div.center-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.btn-group {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+div.jumbotron {
+    background: none;
+}
+
+body {
+    /* Credits to Isaac Wendland on Unsplash for the Photo */
+    background-image: url('https://images.unsplash.com/photo-1581889470536-467bdbe30cd0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1990&q=80');
+}
