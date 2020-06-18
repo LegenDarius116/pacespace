@@ -1,0 +1,24 @@
+{% extends 'login_base.html' %}
+
+{% block content %}
+<div class="form-container"
+    <head>
+        <h1>Login</h1>
+        <hr>
+    </head>
+
+    <body>
+
+    <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+
+        {{ login_form }}
+        <hr>
+        <button type="submit">Login</button>
+
+    </form>
+
+    </body>
+</div>
+
+{% endblock %}

@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django import forms
-from database.models import User
+from database.models import PaceUser
 from django.utils.safestring import mark_safe
 
 class SignupForm(UserCreationForm):
@@ -19,7 +19,7 @@ class SignupForm(UserCreationForm):
     )
 
     class Meta(UserCreationForm.Meta):
-        model = User
+        model = PaceUser
         help_texts = {
             'username': None,
         }

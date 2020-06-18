@@ -42,3 +42,9 @@ button {
 button:hover {
   opacity:1;
 }
+
+div.form-container {
+  max-width:500px;
+  margin: auto;
+  overflow: auto;
+}

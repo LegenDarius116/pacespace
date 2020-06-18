@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from database.models import User
+from database.models import PaceUser
 from .forms import SignupForm
 from helper import parse_req_body
 
-def signup(request):
+def signup_view(request):
     print('running signup page')
     if request.method == "POST":
         signup_form = SignupForm(request.POST)
@@ -17,8 +17,8 @@ def signup(request):
             else:
                 user.is_teacher = True
             user.save()
-#     username = signup_form.cleaned_data.get('username')
-#     password = signup_form.cleaned_data.get('password1')
+#     username = login_form.cleaned_data.get('username')
+#     password = login_form.cleaned_data.get('password1')
 #     user = authenticate(username=username, password=password)
 #     login(request, user)
 #     return redirect('home')

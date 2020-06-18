@@ -73,7 +73,7 @@ class Project(models.Model):
     date_submit = models.DateTimeField(null=True, blank=True)
 
 
-class User(AbstractUser):
+class PaceUser(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     school_classes = models.ManyToManyField(SchoolClass)
