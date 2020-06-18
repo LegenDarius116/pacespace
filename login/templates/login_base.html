@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% comment %} html page that the rest of the pages of the app wil import {% endcomment %}
+{% comment %} will serve as the base structure for your app {% endcomment %}
+
+{%block css%}
+  {% comment %} import/write any css global to the app here {% endcomment %}
+  {% block page_css %}
+    {% comment %} import/write CSS for a specific page {% endcomment %}
+  {% endblock %}
+{% endblock %}
+
+{% comment %} javascript {% endcomment %}
+{%block javascript%}
+  {% comment %} import/write any javascript global to the app here {% endcomment %}    
+  {% block page_js %}
+    {% comment %} import/write javascript for a specific page {% endcomment %}
+  {% endblock %}
+{% endblock %}
+
+{% block content %}
+  {% comment %} base html template structure for your app {% endcomment %}
+  {% block page_content %}
+    {% comment %} specific page html content{% endcomment %}
+  {% endblock %}
+{% endblock %}
