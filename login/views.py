@@ -15,9 +15,9 @@ def login_view(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                # Redirect to a success page.
-                if request.user.is_authenticated is True:
-                    return redirect('index')
+                    # Redirect to a success page.
+                    if request.user.is_authenticated is True:
+                        return redirect('index')
         except:
             import traceback
             traceback.print_exc()
