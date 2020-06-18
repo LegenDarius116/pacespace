@@ -4,7 +4,7 @@ from database.models import PaceUser
 from .forms import SignupForm, LoginForm
 from helper import parse_req_body
 
-def signup_view(request):
+def signup_user(request):
     print('running signup page')
     if request.method == "POST":
         signup_form = SignupForm(request.POST)
@@ -24,7 +24,7 @@ def signup_view(request):
     return render(request, "signup.html", {"signup_form": signup_form})
 
 
-def login_view(request):
+def login_user(request):
     if request.method == "POST":
         login_form = LoginForm(data=request.POST)
         print(login_form)
@@ -47,7 +47,12 @@ def login_view(request):
         login_form = LoginForm()
     return render(request, "login.html", {"login_form": login_form})
 
-def logout_view(request):
-    logout(request)
-    # messages.info(request, "Logged out successfully!")
-    return redirect("index")
+def logout_user(request):
+    """If user is logged in, logs them out. Then redirects to landing page."""
+    if request.user.is_authenticated:
+        print(f"Logging out user {request.user.username}")
+        logout(request)
+    else:
+        print("No authenticated users found")
+
+    return redirect('/')

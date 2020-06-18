@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'database',
     'landing',
     'authentication',
-    'login',
-    'logout',
     'dashboard',
 
     # 3rd party apps
