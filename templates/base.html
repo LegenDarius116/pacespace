@@ -14,11 +14,23 @@
     {% block css %}
     {% endblock %}
 
+    <title>PaceSpace</title>
+
 </head>
 
 <body>
 <!-- make a navbar here -->
-    <title>PaceSpace</title>
+    {% block nav %}
+    <ul id="nav" class="nav justify-content-end">
+        <li><a class="nav-link active" href="{% url "index" %}">Home</a></li>
+        {% if user.is_authenticated %}
+            <li><a class="nav-link active" href="{% url "logout" %}">Log out</a></li>
+        {% else %}
+            <li><a class="nav-link active" href="{% url "login" %}">Log in</a></li>
+            <li><a class="nav-link active" href="{% url "signup" %}">Sign up</a></li>
+        {% endif %}
+    </ul>
+    {% endblock %}
     
     <!-- app title -->
     {% block app_title %}

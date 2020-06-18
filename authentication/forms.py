@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import models
 from django import forms
 from database.models import PaceUser
@@ -24,3 +24,7 @@ class SignupForm(UserCreationForm):
             'username': None,
         }
         fields = ["username","first_name", "last_name", "email", "password1", "password2"]
+
+class LoginForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        pass

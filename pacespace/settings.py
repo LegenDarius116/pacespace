@@ -46,10 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Custom apps
-    'signup',
     'database',
     'landing',
-    'login',
+    'authentication',
 
     # 3rd party apps
     'crispy_forms',
