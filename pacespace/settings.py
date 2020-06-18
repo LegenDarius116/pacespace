@@ -45,11 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Custom apps
-    'signup',
     'database',
     'landing',
-    'login',
-    'logout',
+    'authentication',
     'dashboard',
 
     # 3rd party apps
