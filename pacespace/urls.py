@@ -23,4 +23,6 @@ urlpatterns = [
     path('', include('signup.urls')),
     path('', include('login.urls')),
     path('', include('landing.urls')),
+    path('', include('dashboard.urls')),
+    path('', include('logout.urls'))
 ]
