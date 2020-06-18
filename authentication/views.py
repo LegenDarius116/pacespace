@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from database.models import PaceUser
 from .forms import SignupForm, LoginForm
-from helper import parse_req_body
+
 
 def signup_user(request):
+    """Creates user"""
     print('running signup page')
     if request.method == "POST":
         signup_form = SignupForm(request.POST)
-        ''' Create user '''
         if signup_form.is_valid():
             user = signup_form.save(commit=False)
             usertype = signup_form.cleaned_data["usertype"]
@@ -25,6 +24,7 @@ def signup_user(request):
 
 
 def login_user(request):
+    """Attempts to log in existing user"""
     if request.method == "POST":
         login_form = LoginForm(data=request.POST)
         print(login_form)
@@ -46,6 +46,7 @@ def login_user(request):
     else:
         login_form = LoginForm()
     return render(request, "login.html", {"login_form": login_form})
+
 
 def logout_user(request):
     """If user is logged in, logs them out. Then redirects to landing page."""
