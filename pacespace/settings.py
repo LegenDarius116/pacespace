@@ -37,7 +37,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # Built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +48,9 @@ INSTALLED_APPS = [
     'database',
     'landing',
     'authentication',
+    'login',
+    'logout',
+    'dashboard',
 
     # 3rd party apps
     'crispy_forms',
@@ -65,6 +67,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pacespace.urls'
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 TEMPLATES = [
     {
