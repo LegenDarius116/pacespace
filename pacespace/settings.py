@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'database',
     'landing',
     'login',
+    'logout',
     'dashboard',
 
     # 3rd party apps
@@ -66,6 +67,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pacespace.urls'
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 TEMPLATES = [
     {
