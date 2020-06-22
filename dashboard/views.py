@@ -9,6 +9,7 @@ def dashboard(request):
     For now, dashboard only shows user name and user type.
     TODO: dashboard will list classes that the user is associated with.
     """
+    # get user type
     if request.user.is_student:
         user_type = "Student"
     elif request.user.is_teacher:
@@ -19,6 +20,7 @@ def dashboard(request):
     context = {
         'user_name': request.user.username,
         'user_type': user_type,
+        'classes': request.user.school_classes.all(),
     }
 
     return render(request, 'dashboard/index.html', context=context)

@@ -19,8 +19,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h1>You are logged in as {{ user_name }} ({{ user_type }})</h1>
+                <h3>You are logged in as {{ user_name }} ({{ user_type }})</h3>
                 <a href="/logout">Logout</a>
+                <hr>
+                <h1>Classes</h1>
+                <ul class="list-group">
+                    {% for class in classes %}
+                    <li class="list-group-item">{{ class }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
