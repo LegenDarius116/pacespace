@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block css %}
+
+<style>
+div.schoolclass-box {
+    border: 3px solid #949599;
+    border-radius: 14px;
+    height: 150px;
+    width: 100%;
+    max-width:1000px;
+}
+
+div.schoolclass-name-box {
+    background: #3333ff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 50px;
+    width: 100%;
+}
+
+div.name {
+    padding:15px;
+}
+
+a.white-link {
+    color: white;
+    text-decoration: none;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <head>
+        <h1>Classes</h1>
+        <hr>
+    </head>
+
+    <body>
+
+        {% for schoolclass in all_schoolclass %}
+            
+        <div class="schoolclass-box">
+            <div class ="schoolclass-name-box">
+                <div class="name">
+                    <a class="white-link" href=schoolclass>
+                    <strong>{{ schoolclass.name }}<strong> </a>
+                </div>
+                <div class="name">
+                    <a href="student_enrollment"> Student Enrollment </a>
+                    <img 
+                        src="{{  }}" 
+                        height="30"
+                        width="30" />
+                </div>
+
+                <div class="name">
+                    <a href="assignments"> Assignment </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}  
+        
+        <div class="add-class">
+            <form method="POST" action="{% url 'all_schoolclass' %}">
+                {% csrf_token %}
+
+                <div class="add-class-form">
+
+                {{ class_form }}
+                
+                <button type="submit" class="createbtn">+</button>
+
+                </div>
+            </form>
+        </div>
+    </body>
+</div>
+{% endblock %}

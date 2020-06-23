@@ -1,6 +1,4 @@
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.db import models
 from django import forms
 from database.models import PaceUser
 from django.utils.safestring import mark_safe
