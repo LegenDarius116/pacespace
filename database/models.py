@@ -30,22 +30,27 @@ class Project(models.Model):
         max_length=2,
         choices=STATUS_CHOICES,
         default="A"
-    ) 
+    )
 
     description_text = models.TextField(default='', null=True, blank=True)
-
     description_file = models.FileField(upload_to=user_directory_path, null=True, blank=True)
 
-    submission = models.FileField(upload_to=user_directory_path, null=True, blank=True)
-
     date_assign = models.DateTimeField(auto_now_add=True)
-
     date_due = models.DateTimeField(default=timezone.now)
 
-    date_submit = models.DateTimeField(null=True, blank=True)
+    school_class = models.ForeignKey(SchoolClass, on_delete=models.CASCADE)
 
 
 class PaceUser(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     school_classes = models.ManyToManyField(SchoolClass)
+
+
+class ProjectSubmission(models.Model):
+    """A project submission given by a Student"""
+    student = models.ForeignKey(PaceUser, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    date_submit = models.DateTimeField()
+    content = models.TextField(default='')
+    grade = models.IntegerField(default=-1)
