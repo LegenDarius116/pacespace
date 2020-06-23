@@ -6,9 +6,10 @@
 div.schoolclass-box {
     border: 3px solid #949599;
     border-radius: 14px;
-    height: 150px;
+    height: 200px;
     width: 100%;
     max-width:1000px;
+    margin-bottom: 20px
 }
 
 div.schoolclass-name-box {
@@ -45,16 +46,19 @@ a.white-link {
         <div class="schoolclass-box">
             <div class ="schoolclass-name-box">
                 <div class="name">
-                    <a class="white-link" href=schoolclass>
+                    <a class="white-link" href="{% url "view_schoolclass" schoolclass.pk %}">
                     <strong>{{ schoolclass.name }}<strong> </a>
                 </div>
+
+                {% if user.is_teacher %}
                 <div class="name">
                     <a href="student_enrollment"> Student Enrollment </a>
-                    <img 
+                    {% comment %} <img 
                         src="{{  }}" 
                         height="30"
-                        width="30" />
+                        width="30" /> {% endcomment %}
                 </div>
+                {% endif %} 
 
                 <div class="name">
                     <a href="assignments"> Assignment </a>

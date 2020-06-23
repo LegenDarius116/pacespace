@@ -28,17 +28,30 @@ def all_schoolclass(request):
             "class_form": class_form,
         }
 
-        return render(request, "all_schoolclass.html", context)
+        return render(request, "all_schoolclass.html", context=context)
     else:
         return redirect('index')
 
 def view_schoolclass(request, pk):
     if request.user.is_authenticated:
-        schoolclass = SchoolClass.objects.get(pk=pk)
-        context = { 
-            "schoolclass":schoolclass,
-        }
-        return render(request, view_schoolclass, context)
+        schoolclass = request.user.school_classes.get(pk=pk)
+        
+        if schoolclass is not None:
+            context = { 
+                "schoolclass": schoolclass,
+                'is_enrolled': "True",
+            }
+
+        else:
+            print("Not enrolled")
+            schoolclass = SchoolClass.objects.get(pk=pk)
+            
+            context = { 
+                "schoolclass": schoolclass,
+                'is_enrolled': "False",
+            }  
+        print(context)
+        return render(request, "view_schoolclass.html", context=context)
 
     else:
         return redirect('index')
