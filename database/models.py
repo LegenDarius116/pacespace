@@ -19,6 +19,7 @@ class SchoolClass(models.Model):
 
 
 class Project(models.Model):
+    # because of ProjectSubmission, might remove these
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('S', 'Submitted'),
@@ -33,6 +34,8 @@ class Project(models.Model):
     )
 
     description_text = models.TextField(default='', null=True, blank=True)
+
+    # might remove this for simplicity
     description_file = models.FileField(upload_to=user_directory_path, null=True, blank=True)
 
     date_assign = models.DateTimeField(auto_now_add=True)
