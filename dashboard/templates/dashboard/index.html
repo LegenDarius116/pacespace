@@ -19,8 +19,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h3>You are logged in as {{ user_name }} ({{ user_type }})</h3>
-                <a href="/logout">Logout</a>
+                <h3>You are logged in as {{ user_name }} ({{ user_type }}) <a href="/logout">Logout</a></h3>
+
+                {% if user_type == "Teacher" %}
+                <div role="group" class="btn-group">
+                    <!-- Links to perform Class creation and Student Enrollment by Teacher coming soon -->
+                    <a class="btn btn-primary" href="#" role="button">Create Class</a>
+                    <a class="btn btn-primary" href="#" role="button">Add Student to Class</a>
+                </div>
+                {% endif %}
+
                 <hr>
                 <h1>Classes</h1>
                 <ul class="list-group">

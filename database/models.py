@@ -4,6 +4,13 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+# use to specify directory path, temporary for now
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.owner.id, filename)
+
+
 class SchoolClass(models.Model):
     name = models.CharField(max_length=30)
 
@@ -11,42 +18,8 @@ class SchoolClass(models.Model):
         return f'{self.name}'
 
 
-# use to specify directory path, temporary for now
-def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.owner.id, filename)
-
-# Project is made up of many Missions
-class Mission(models.Model):
-    STATUS_CHOICES = [
-        ('A', 'Assigned'),
-        ('C', 'Completed')
-    ]
-
-    status = models.CharField(
-        max_length=1,
-        choices=STATUS_CHOICES,
-        default="A"
-    )   
-
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
-
-    description_text = models.TextField(default='')
-
-    submission = models.FileField(upload_to=user_directory_path, null=True, blank=True)
-
-    reward = models.IntegerField(default=0)
-    
-    date_assign = models.DateTimeField(auto_now_add=True)
-
-    date_due = models.DateTimeField(default=timezone.now)
-
-    date_submit = models.DateTimeField(null=True, blank=True)
-
-    
-
-
 class Project(models.Model):
+    # because of ProjectSubmission, might remove these
     STATUS_CHOICES = [
         ('A', 'Assigned'),
         ('S', 'Submitted'),
@@ -58,22 +31,29 @@ class Project(models.Model):
         max_length=2,
         choices=STATUS_CHOICES,
         default="A"
-    ) 
+    )
 
     description_text = models.TextField(default='', null=True, blank=True)
 
+    # might remove this for simplicity
     description_file = models.FileField(upload_to=user_directory_path, null=True, blank=True)
 
-    submission = models.FileField(upload_to=user_directory_path, null=True, blank=True)
-
     date_assign = models.DateTimeField(auto_now_add=True)
-
     date_due = models.DateTimeField(default=timezone.now)
 
-    date_submit = models.DateTimeField(null=True, blank=True)
+    school_class = models.ForeignKey(SchoolClass, on_delete=models.CASCADE)
 
 
 class PaceUser(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     school_classes = models.ManyToManyField(SchoolClass)
+
+
+class ProjectSubmission(models.Model):
+    """A project submission given by a Student"""
+    student = models.ForeignKey(PaceUser, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    date_submit = models.DateTimeField()
+    content = models.TextField(default='')
+    grade = models.IntegerField(default=-1)

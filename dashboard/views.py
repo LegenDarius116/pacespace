@@ -20,6 +20,7 @@ def dashboard(request):
     context = {
         'user_name': request.user.username,
         'user_type': user_type,
+        'user': request.user,
         'classes': request.user.school_classes.all(),
     }
 
