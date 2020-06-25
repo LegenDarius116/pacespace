@@ -29,7 +29,8 @@ def add_student_to_class(teacher: PaceUser, schoolclass: SchoolClass, student: P
     # if none of the errors above go off, perform the actual operation
     student.schoolclasses.add(schoolclass)
     student.save()
-
+    schoolclass.student_count += 1
+    schoolclass.save()
 
 def assign_project(teacher: PaceUser, schoolclass: SchoolClass, assignment_description: str, due_date: datetime):
     """Use this function to allow a teacher to assign projects for classes they own"""

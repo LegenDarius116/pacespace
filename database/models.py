@@ -7,7 +7,8 @@ from django.dispatch import receiver
 class SchoolClass(models.Model):
     name = models.CharField(max_length=30)
     teacher = models.ForeignKey('PaceUser', on_delete=models.SET_NULL, null=True)
-
+    student_count = models.IntegerField(default=0)
+    
     def __str__(self):
         return f'{self.name}'
 

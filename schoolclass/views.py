@@ -24,18 +24,11 @@ def all_schoolclass(request):
             class_form = ClassForm()
         else:
             class_form = None
-        all_schoolclass = user.schoolclasses.all
-        # student_count = []
-
-        # error: can't iterate thru method object
-        # for schoolclass in all_schoolclass:
-        #     count = PaceUser.objects.filter(schoolclasses=schoolclass).count()
-        #     student_count.append(count)
-
+        all_schoolclass = user.schoolclasses.all()
+        
         context = {
             "all_schoolclass": all_schoolclass,
             "class_form": class_form,
-            # "student_count": student_count,
         }
 
         return render(request, "all_schoolclass.html", context=context)
