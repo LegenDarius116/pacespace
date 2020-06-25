@@ -14,7 +14,7 @@ def signup_user(request):
             if signup_form.is_valid():
                 user = signup_form.save(commit=False)
                 usertype = signup_form.cleaned_data["usertype"]
-                if usertype is 'S':
+                if usertype == 'S':
                     user.is_student = True
                 else:
                     user.is_teacher = True

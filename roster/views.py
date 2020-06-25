@@ -16,7 +16,7 @@ def enrollment(request, pk):
 
                 if query is not None:
                     lookups= Q(username__icontains=query) | Q(email__icontains=query)
-                    results= PaceUser.objects.filter(lookups).distinct().exclude(schoolclasses=schoolclass)
+                    results= PaceUser.objects.filter(lookups).distinct().exclude(schoolclasses=schoolclass).filter(is_student=True)
                 
                 else:
                     lookups = None
