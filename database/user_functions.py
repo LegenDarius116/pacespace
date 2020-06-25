@@ -6,7 +6,7 @@ def create_class(teacher: PaceUser, name: str):
     and adds it to the user's school_classes.
     """
     if teacher.is_teacher:
-        school_class = SchoolClass(name=name)
+        school_class = SchoolClass(name=name, teacher=teacher)
         school_class.save()
         teacher.school_classes.add(school_class)
 

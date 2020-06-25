@@ -28,6 +28,12 @@ a.white-link {
     color: white;
     text-decoration: none;
 }
+
+button.createbtn {
+    border-radius: 14px;
+    width: 50px;
+    float: right;
+}
 </style>
 
 {% endblock %}
@@ -53,15 +59,19 @@ a.white-link {
                 {% if user.is_teacher %}
                 <div class="name">
                     <a href="student_enrollment"> Student Enrollment </a>
-                    {% comment %} <img 
-                        src="{{  }}" 
-                        height="30"
-                        width="30" /> {% endcomment %}
+                    <img 
+                        src="\media\vector_icons\user-plus-solid.svg" 
+                        height="20"
+                        width="20" />
                 </div>
                 {% endif %} 
 
                 <div class="name">
                     <a href="assignments"> Assignment </a>
+                    <img 
+                        src="\media\vector_icons\file-solid.svg" 
+                        height="20"
+                        width="20" />
                 </div>
 
             </div>

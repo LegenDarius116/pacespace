@@ -48,3 +48,7 @@ div.form-container {
   margin: auto;
   overflow: auto;
 }
+
+div.topnav-right {
+  float: right;
+}

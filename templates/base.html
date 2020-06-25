@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<link rel="icon" href="\media\vector_icons\running-solid.svg">
+
 <head>
 
     <meta charset="utf-8">
@@ -21,18 +24,24 @@
 <body>
 <!-- make a navbar here -->
     {% block nav %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url "index" %}">PaceSpace</a>
-        <ul id="nav" class="nav justify-content-end">
-            <li><a class="nav-link active" href="{% url "index" %}">Home</a></li>
-            {% if user.is_authenticated %}
-                <li><a class="nav-link active" href="{% url "logout" %}">Log out</a></li>
-            {% else %}
-                <li><a class="nav-link active" href="{% url "login" %}">Log in</a></li>
-                <li><a class="nav-link active" href="{% url "signup" %}">Sign up</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+    <div class="top-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+            <a class="navbar-brand" href="{% url "index" %}">PaceSpace</a>
+            
+            <div class="topnav-right">
+                <ul id="nav" class="nav justify-content-end">
+                    <li><a class="nav-link active" href="{% url "index" %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a class="nav-link active" href="{% url "all_schoolclass" %}">Classes</a></li>
+                        <li><a class="nav-link active" href="{% url "logout" %}">Log out</a></li>
+                    {% else %}
+                        <li><a class="nav-link active" href="{% url "login" %}">Log in</a></li>
+                        <li><a class="nav-link active" href="{% url "signup" %}">Sign up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
     {% endblock %}
     
     <!-- app title -->
