@@ -21,7 +21,7 @@ def dashboard(request):
         'user_name': request.user.username,
         'user_type': user_type,
         'user': request.user,
-        'classes': request.user.school_classes.all(),
+        'classes': request.user.schoolclasses.all(),
     }
 
     return render(request, 'dashboard/index.html', context=context)

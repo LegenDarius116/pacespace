@@ -20,6 +20,10 @@ div.schoolclass-name-box {
     width: 100%;
 }
 
+div.schoolclass-name-box-right {
+    float:right;
+}
+
 div.name {
     padding:15px;
 }
@@ -34,6 +38,11 @@ button.createbtn {
     width: 50px;
     float: right;
 }
+
+img.icon {
+    float:right;
+}
+
 </style>
 
 {% endblock %}
@@ -46,34 +55,46 @@ button.createbtn {
     </head>
 
     <body>
-
+        {% comment %} {% i = 0 %} {% endcomment %}
         {% for schoolclass in all_schoolclass %}
             
         <div class="schoolclass-box">
-            <div class ="schoolclass-name-box">
+            <div class="schoolclass-name-box">
                 <div class="name">
-                    <a class="white-link" href="{% url "view_schoolclass" schoolclass.pk %}">
-                    <strong>{{ schoolclass.name }}<strong> </a>
+                        <div class = "link">
+                            <a class="white-link" href="{% url "view_schoolclass" schoolclass.pk %}">
+                            <b>{{ schoolclass.name }}</b>
+                            </a>   
+                            <a href={% url 'students' schoolclass.pk %}>  
+                                {% comment %} {{ student_count[i] }} {{ i++ }}                          {% endcomment %}
+                                <img 
+                                    class='icon'
+                                    src="\media\vector_icons\user-solid.svg" 
+                                    height="17"
+                                    width="17" />
+                            </a> 
+                        </div>
                 </div>
+            </div>
 
-                {% if user.is_teacher %}
-                <div class="name">
-                    <a href="student_enrollment"> Student Enrollment </a>
+            {% if user.is_teacher %}
+            <div class="name">
+                <a href={% url "enrollment" schoolclass.pk %}> Student Enrollment 
                     <img 
                         src="\media\vector_icons\user-plus-solid.svg" 
-                        height="20"
-                        width="20" />
-                </div>
-                {% endif %} 
+                        height="17"
+                        width="17" />
+                </a>
+            </div>
+            {% endif %} 
 
-                <div class="name">
-                    <a href="assignments"> Assignment </a>
+            <div class="name">
+                <a href={% url 'all_project' schoolclass.pk %}> Project 
                     <img 
                         src="\media\vector_icons\file-solid.svg" 
-                        height="20"
-                        width="20" />
-                </div>
-
+                        height="17"
+                        width="17" />
+                </a>
             </div>
 
         </div>

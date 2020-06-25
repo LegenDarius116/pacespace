@@ -27,7 +27,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET')
-SECRET_KEY= '-*@)$-32fn=%q#kpfsfw$hj2z#+8^wxa##lo@)&gsoq!yd-&3*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG'))
@@ -51,6 +50,8 @@ INSTALLED_APPS = [
     'authentication',
     'dashboard',
     'schoolclass',
+    'project',
+    'roster',
 
     # 3rd party apps
     'crispy_forms',

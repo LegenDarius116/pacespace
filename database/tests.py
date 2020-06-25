@@ -40,70 +40,70 @@ class UserTestCase(TestCase):
     def test_create_class_happy(self):
         """Tests that Teachers can create School Classes"""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        self.assertTrue(self.teacher.school_classes.get(name="History of Jamaica"))
-        print(self.teacher.school_classes.all())
+        self.assertTrue(self.teacher.schoolclasses.get(name="History of Jamaica"))
+        print(self.teacher.schoolclasses.all())
 
     def test_add_student_to_class(self):
         """Tests happy path of a Teacher adding a Student to a class they teach."""
 
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         for user in (self.teacher, self.student):
-            self.assertTrue(user.school_classes.get(name="History of Jamaica"))
+            self.assertTrue(user.schoolclasses.get(name="History of Jamaica"))
 
     def test_student_cannot_create_class(self):
         """Tests that Students cannot create classes"""
         create_class(teacher=self.student, name="History of Jamaica")
 
-        self.assertFalse(self.student.school_classes.all())
+        self.assertFalse(self.student.schoolclasses.all())
         with self.assertRaises(Exception):
             SchoolClass.objects.get(name="History of Jamaica")
 
     def test_cannot_add_another_teacher(self):
         """Tests that Teachers cannot add another Teacher to their class."""
         create_class(teacher=self.teacher, name="Aggressive Hacking")
-        school_class = SchoolClass.objects.get(name="Aggressive Hacking")
-        add_student_to_class(teacher=self.teacher, student=self.teacher2, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="Aggressive Hacking")
+        add_student_to_class(teacher=self.teacher, student=self.teacher2, schoolclass=schoolclass)
 
-        self.assertFalse(self.teacher2.school_classes.all())
+        self.assertFalse(self.teacher2.schoolclasses.all())
 
     def test_cannot_add_to_class(self):
         """Tests that Teachers cannot add students to a class that they are not instructing."""
         SchoolClass.objects.create(name="Not My Class")
-        school_class = SchoolClass.objects.get(name="Not My Class")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="Not My Class")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
-        self.assertFalse(self.teacher.school_classes.all())
-        self.assertFalse(self.student.school_classes.all())
+        self.assertFalse(self.teacher.schoolclasses.all())
+        self.assertFalse(self.student.schoolclasses.all())
 
     def test_assign_project_happy(self):
         """Tests that teachers can assign projects to classes they instruct"""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         assign_project(
             teacher=self.teacher,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
 
         project = Project.objects.get(description_text="Assignment Description")
 
-        self.assertEqual(project.school_class, school_class)
+        self.assertEqual(project.schoolclass, schoolclass)
 
     def test_assign_project_fail(self):
         """Tests that teachers cannot assign projects to classes they don't teach"""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         assign_project(
             teacher=self.teacher2,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
@@ -111,17 +111,17 @@ class UserTestCase(TestCase):
         with self.assertRaises(Exception):
             Project.objects.get(description_text="Assignment Description")
 
-        self.assertFalse(Project.objects.filter(school_class=school_class))
+        self.assertFalse(Project.objects.filter(schoolclass=schoolclass))
 
     def test_project_submission_happy(self):
         """Tests that students can upload Project Submissions for a class they're in."""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         assign_project(
             teacher=self.teacher,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
@@ -137,12 +137,12 @@ class UserTestCase(TestCase):
         self.assertEqual(submission.project, project)
         self.assertEqual(submission.student, self.student)
         self.assertEqual(submission.grade, -1)
-        self.assertIn(submission.project.school_class, self.student.school_classes.all())
+        self.assertIn(submission.project.schoolclass, self.student.schoolclasses.all())
 
     def test_project_submission_to_invalid_class(self):
         """Tests that students cannot upload Project Submissions to classes they're not in."""
-        school_class = SchoolClass(name="asdf")
-        project = Project(school_class=school_class)
+        schoolclass = SchoolClass(name="asdf")
+        project = Project(schoolclass=schoolclass)
         submit_project(student=self.student, content="asd", project=project)
 
         with self.assertRaises(Exception):
@@ -155,10 +155,10 @@ class UserTestCase(TestCase):
     def test_project_submission_invalid_user(self):
         """Tests that teachers cannot upload Project Submissions"""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
         assign_project(
             teacher=self.teacher,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
@@ -176,12 +176,12 @@ class UserTestCase(TestCase):
     def test_grade_submission_happy(self):
         """Tests that teachers can grade Project Submissions"""
         create_class(teacher=self.teacher, name="History of Jamaica")
-        school_class = SchoolClass.objects.get(name="History of Jamaica")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Jamaica")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         assign_project(
             teacher=self.teacher,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
@@ -199,12 +199,12 @@ class UserTestCase(TestCase):
     def test_grade_submission_invalid(self):
         """Tests that Teachers cannot grade Project Submissions to classes they don't teach."""
         create_class(teacher=self.teacher, name="History of Cuba")
-        school_class = SchoolClass.objects.get(name="History of Cuba")
-        add_student_to_class(teacher=self.teacher, student=self.student, school_class=school_class)
+        schoolclass = SchoolClass.objects.get(name="History of Cuba")
+        add_student_to_class(teacher=self.teacher, student=self.student, schoolclass=schoolclass)
 
         assign_project(
             teacher=self.teacher,
-            school_class=school_class,
+            schoolclass=schoolclass,
             assignment_description="Assignment Description",
             due_date=datetime.now() + timedelta(days=50)
         )
