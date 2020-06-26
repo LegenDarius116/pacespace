@@ -25,16 +25,6 @@ a.white-link {
     padding-right: 7px;
 }
 
-button.createbtn {
-    border-radius: 14px;
-    width: 60px;
-    height: 60px;
-    float: right;
-    background-color: red;
-    font-size: 25px;
-    padding: 0px;
-}
-
 input.class_name_input {
     border: 3px solid #949599;
 }

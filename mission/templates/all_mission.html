@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <head>
+        <h1>Missions</h1>
+        <link rel="stylesheet" href="{% static 'css/all_mission.css' %}">
+    </head>
+
+    <body>
+    {% comment %} To Do {% endcomment %}
+    {% if all_mission %}
+        {% for mission in all_mission %}
+            {% if mission.pk is not None %}
+                <div class="object-box">
+                    <a href={% url 'view_mission' %}>{{mission.name}}</a>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+    {% else %}
+        <p>There are no missions! Create one</p>
+    {% endif %}
+    {% comment %} Overdue {% endcomment %}
+
+
+    {% comment %} Submitted {% endcomment %}
+    {% if user.is_teacher %}
+        <form method="POST" action="{% url 'all_mission' pk %}">
+            {% csrf_token %}
+            
+            {{ create_mission_form }}
+
+            <button type="submit" class="createbtn"><b>+</b></button>
+
+        </form>
+    
+    {% endif %}
+
+    </body>
+
+</div>
+{% endblock content %}

@@ -7,7 +7,7 @@ def signup_user(request):
     """Creates user"""
     print('running signup page')
     if request.user.is_authenticated:
-        return redirect('/dashboard')
+        return redirect('dashboard')
     else:
         if request.method == "POST":
             signup_form = SignupForm(request.POST)
@@ -29,7 +29,7 @@ def signup_user(request):
 def login_user(request):
     """Attempts to log in existing user"""
     if request.user.is_authenticated: 
-        return redirect('/dashboard')
+        return redirect('dashboard')
     else:
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
@@ -62,4 +62,4 @@ def logout_user(request):
     else:
         print("No authenticated users found")
 
-    return redirect('/')
+    return redirect('index')

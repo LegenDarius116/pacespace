@@ -19,6 +19,22 @@
             </ul>
         </div>
 
+        {% comment %} <div class="mission">
+            {% for schoolclass in all_mission %}
+                <a href={% url 'view_schoolclass' schoolclass.pk %}>{{schoolclass}}</a>
+                {% for mission in class %}
+                    {% if mission.pk is not None %}
+                        <div class="object-box">
+                            <a href={% url 'view_mission' %}>{{mission.name}}</a>
+                        </div>
+                    {% else %}
+                        <p>There are no missions!</p>
+                    {% endif %}
+
+                {% endfor %}
+            {% endfor %}
+        </div> {% endcomment %}
+
     </body>
 </div>
 

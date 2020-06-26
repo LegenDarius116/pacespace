@@ -95,3 +95,13 @@ img.icon {
   height:17px;
   width:17px;
 }
+
+button.createbtn {
+  border-radius: 14px;
+  width: 60px;
+  height: 60px;
+  float: right;
+  background-color: red;
+  font-size: 25px;
+  padding: 0px;
+}

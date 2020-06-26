@@ -7,5 +7,5 @@ class ClassForm(forms.Form):
         widget=forms.TextInput(attrs={
             'placeholder': 'Enter Class Name', 
             'class':'class_name_input',
-            }),
+        }),
     )

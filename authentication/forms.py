@@ -19,6 +19,7 @@ class SignupForm(UserCreationForm):
     password2 = forms.CharField(
         label = 'Repeat Password:',
         help_text=None,
+        widget=forms.PasswordInput()
     )
 
     class Meta(UserCreationForm.Meta):

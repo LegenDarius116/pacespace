@@ -1,0 +1,20 @@
+body{
+    background-image: url(/media/background_img/spaceship_interior.jpg);
+    background-position: center center;
+    font-family: 'Saira Semi Condensed';
+    font-size: 16px;    
+}
+
+h1,h2,h3,p,label {
+    color: white;
+}
+
+label {
+    font-size: 20px;
+}
+
+input.file_input {
+    color: #6b6a6a;
+}
+
+
