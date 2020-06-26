@@ -10,17 +10,19 @@ class SignupForm(UserCreationForm):
     ]
 
     usertype = forms.ChoiceField(
-        label=mark_safe('<br/> <br/> Usertype'), 
+        label='Usertype',
         choices=USERTYPE_CHOICES,
         widget=forms.RadioSelect(attrs={'class': "usertype"}),
         help_text=None,
     )
 
+    password2 = forms.CharField(
+        label = 'Repeat Password:',
+        help_text=None,
+    )
+
     class Meta(UserCreationForm.Meta):
         model = PaceUser
-        help_texts = {
-            'username': None,
-        }
         fields = ["username","first_name", "last_name", "email", "password1", "password2"]
 
 class LoginForm(AuthenticationForm):

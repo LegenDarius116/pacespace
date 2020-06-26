@@ -53,7 +53,7 @@ def students(request, pk):
         schoolclass = user.schoolclasses.get(pk=pk)
         # user is in the class
         if schoolclass is not None:
-            students = PaceUser.objects.filter(schoolclasses=schoolclass)
+            students = PaceUser.objects.filter(schoolclasses=schoolclass).filter(is_student=True)
             context = {
                 'students':students,
                 'schoolclass':schoolclass,

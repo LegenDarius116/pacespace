@@ -24,4 +24,4 @@ def dashboard(request):
         'classes': request.user.schoolclasses.all(),
     }
 
-    return render(request, 'dashboard/index.html', context=context)
+    return render(request, 'dashboard/dashboard.html', context=context)

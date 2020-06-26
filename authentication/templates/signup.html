@@ -2,6 +2,31 @@
 
 <!-- page css -->
 {% block css %}
+<style>
+
+body {
+    background-image: url(/media/background_img/space-landscape-illustration.jpg);
+    background-position: center;
+    font-family: 'Saira Semi Condensed';
+    font-size: 16px;
+}
+
+span.helptext {
+    display:table;
+}
+
+label {
+    color: white;
+    font-size: 20px;
+    float:left;
+}
+
+button.submitbtn {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+</style>
 {% endblock %}
 
 <!-- page html -->
@@ -9,25 +34,26 @@
 
 <div class="form-container">
 
-<head>
-    <h1>Sign Up</h1>
-    <p>Please fill in this form to create an account.</p>
-    <hr>
-</head>
-
-<body>
-
-  <form method="POST" action="{% url 'signup' %}">
-    {% csrf_token %}
-
-
-      {{ signup_form }}
+  <head>
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
       <hr>
+  </head>
 
-      <button type="submit" class="signupbtn">Sign Up</button>
-  </form>
+  <body>
+
+    <form method="POST" action="{% url 'signup' %}" class="form-inline">
+      {% csrf_token %}
+        {{ signup_form }}
+      {% comment %} {% for field in signup_form.fields %}
+        {{ field.label }}
+        </br>
+      {% endfor %} {% endcomment %}
+
+        <button type="submit" class="submitbtn">Sign Up</button>
+    </form>
+  </body>
 
 </div>
-</form>
 
 {% endblock %}

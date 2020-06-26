@@ -34,16 +34,17 @@ def add_student_to_class(teacher: PaceUser, schoolclass: SchoolClass, student: P
 
 def assign_project(teacher: PaceUser, schoolclass: SchoolClass, assignment_description: str, due_date: datetime):
     """Use this function to allow a teacher to assign projects for classes they own"""
-    if schoolclass not in teacher.schoolclasses.all():
-        print("Error: Cannot add student to a class you are not the teacher of!")
-        return
+    if teacher.is_teacher and teacher == schoolclass.teacher:
+        project = Project(
+            description_text=assignment_description,
+            date_due=due_date,
+            schoolclass=schoolclass
+        )
+        project.save()
 
-    project = Project(
-        description_text=assignment_description,
-        date_due=due_date,
-        schoolclass=schoolclass
-    )
-    project.save()
+    else:
+        print("Error: Cannot add project to a class you are not the teacher of!")
+        return
 
 
 def submit_project(student: PaceUser, project: Project, content: str):

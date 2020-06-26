@@ -1,0 +1,50 @@
+body {
+    background-image: url(/media/background_img/space_diagonal.png);
+    background-repeat: no-repeat;
+    background-size: auto;    
+    font-family: 'Saira Semi Condensed';
+    font-size: 16px;
+}
+
+div.add-class {
+    margin: center;
+    max-width:1000px;
+}
+
+div.name {
+    padding: 15px;
+}
+
+div.link {
+    float: right;
+}
+
+a.white-link {
+    color: white;
+    text-decoration: none;
+    padding-right: 7px;
+}
+
+button.createbtn {
+    border-radius: 14px;
+    width: 60px;
+    height: 60px;
+    float: right;
+    background-color: red;
+    font-size: 25px;
+    padding: 0px;
+}
+
+input.class_name_input {
+    border: 3px solid #949599;
+}
+
+label {
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 0 0 #5c5c5c, 0 -1px 0 #5c5c5c, 0 1px 0 #5c5c5c, -1px 0 0 #5c5c5c;
+}
+
+h1,h2,h3 {
+    color: white;
+}

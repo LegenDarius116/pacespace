@@ -1,67 +1,18 @@
 {% extends "base.html" %}
-
-{% block css %}
-
-<style>
-div.schoolclass-box {
-    border: 3px solid #949599;
-    border-radius: 14px;
-    height: auto;
-    width: 100%;
-    max-width:1000px;
-    margin-bottom: 20px
-}
-
-div.schoolclass-name-box {
-    background: #3333ff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 50px;
-    width: 100%;
-}
-
-div.name {
-    padding: 15px;
-}
-
-div.link {
-    float: right;
-}
-
-a.white-link {
-    color: white;
-    text-decoration: none;
-    padding-right: 7px;
-}
-
-button.createbtn {
-    border-radius: 14px;
-    width: 50px;
-    float: right;
-}
-
-img.icon {
-    margin-bottom:4px;
-    height:17px;
-    width:17px;
-}
-
-</style>
-
-{% endblock %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     <head>
         <h1>Classes</h1>
-        <hr>
+        <link rel="stylesheet" href="{% static 'css/all_schoolclass.css' %}">
     </head>
 
     <body>
         {% for schoolclass in all_schoolclass %}
             
-        <div class="schoolclass-box">
-            <div class="schoolclass-name-box">
+        <div class="object-box">
+            <div class="object-name-box">
                 <div class="name">
                             <a class="white-link" href="{% url "view_schoolclass" schoolclass.pk %}">
                             <b>{{ schoolclass.name }}</b>
@@ -110,7 +61,7 @@ img.icon {
 
                 {{ class_form }}
                 
-                <button type="submit" class="createbtn">+</button>
+                <button type="submit" class="createbtn"><b>+</b></button>
 
                 </div>
             </form>

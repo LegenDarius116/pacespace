@@ -1,48 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
 <div class='container'>
+
+    <head>
+        <link rel="stylesheet" href="{% static 'css/enrollment.css' %}">
+    </head>
+
     <body>
-        <form action="{% url 'enrollment' pk %}" method="GET" value="{{request.GET.q}}">
-        {% csrf_token %}
-            Search for users to enroll
-            <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search users"/>
-            <input type="submit" class="btn btn-primary" name="submit" value="Search"/>
-        </form>
+        <div class='search'>
+            <form action="{% url 'enrollment' pk %}" method="GET" value="{{request.GET.q}}">
+            {% csrf_token %}
+                Search for users to enroll
+                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search users"/>
+                <input type="submit" class="submitbtn" name="submit" value="Search"/>
+            </form>
 
-        {% if submitbutton == 'Search' and request.GET.q != '' %}
-        <br/>
-            {% if results %}
-            <h4>Results for <b>{{ request.GET.q }}</b></h4>
-                <table id = "enrollment-table" class="table table-condensed table-hover table-striped ng-table">
-                    <tr class = "table_header">
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Enroll</th>
-                    <tr>
-                
-                    {% for result in results %}
-                    <tr>
-                        <td class = "name">{{ result.first_name }} {{ result.last_name }}</td>
-                        <td class = "username">{{ result.username }}</td>
-                        <td class = "email">{{ result.email }}</td>
-                        <td class = "enroll">
-                            <form action="{% url 'enrollment' pk %}" method="POST">
-                            {% csrf_token %}
-                                <input class="user_id" name="user_id" type="hidden" value="{{ result.pk }}"></input>
-                                <input type="submit" name="enroll" value="Enroll"/>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
+            <div class='results'>
+                {% if submitbutton == 'Search' and request.GET.q != '' %}
+                <br/>
+                    {% if results %}
+                    <h4>Results for <b>{{ request.GET.q }}</b></h4>
+                        <table id = "enrollment-table" class="table table-condensed table-hover table-striped ng-table">
+                            <tr class = "table_header">
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Enroll</th>
+                            <tr>
+                        
+                            {% for result in results %}
+                            <tr>
+                                <td class = "name">{{ result.first_name }} {{ result.last_name }}</td>
+                                <td class = "username">{{ result.username }}</td>
+                                <td class = "email">{{ result.email }}</td>
+                                <td class = "enroll">
+                                    <form action="{% url 'enrollment' pk %}" method="POST">
+                                    {% csrf_token %}
+                                        <input class="user_id" name="user_id" type="hidden" value="{{ result.pk }}"></input>
+                                        <input class="submitbtn" type="submit" name="enroll" value="Enroll"/>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
 
-                </table>
-            {% else %}
-                No search results found.
-            {% endif %}
-        {% endif %}
+                        </table>
+                    {% else %}
+                        No search results found.
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
 
     </body>
 </div>

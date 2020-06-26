@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<link rel="icon" href="\media\vector_icons\running-solid.svg">
+<link rel="icon" href="\media\vector_icons\rocket-solid.svg">
 
 <head>
 
@@ -28,15 +28,15 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
             <a class="navbar-brand" href="{% url "index" %}">PaceSpace</a>
             
-            <div class="topnav-right">
+            <div class="top-nav-right">
                 <ul id="nav" class="nav justify-content-end">
                     <li><a class="nav-link active" href="{% url "index" %}">Home</a></li>
                     {% if user.is_authenticated %}
                         <li><a class="nav-link active" href="{% url "all_schoolclass" %}">Classes</a></li>
                         <li><a class="nav-link active" href="{% url "logout" %}">Log out</a></li>
                     {% else %}
-                        <li><a class="nav-link active" href="{% url "login" %}">Log in</a></li>
                         <li><a class="nav-link active" href="{% url "signup" %}">Sign up</a></li>
+                        <li><a class="nav-link active" href="{% url "login" %}">Log in</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -47,7 +47,6 @@
     <!-- app title -->
     {% block app_title %}
     {% endblock %}
-    <hr>
 
 
     <!-- app html -->

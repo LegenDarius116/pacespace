@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <head>
+        <h1>{{ user.first_name }}'s Dashboard</h1>
+        <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <div class="schoolclass">
+            <h3><a href={% url 'all_schoolclass' %}>Classes </a></h3>
+            <ul class="list-group">
+                {% for class in classes %}
+                <li class="list-group-item"><a href={% url 'view_schoolclass' class.pk %}>{{ class.name }} </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </body>
+</div>
+
+{% endblock content %}

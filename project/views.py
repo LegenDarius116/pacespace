@@ -19,8 +19,20 @@ status = models.CharField(
 
 def all_project(request, pk):
     if request.user.is_authenticated:
-        # user = request.user
-        return render(request, "all_project.html")
+        user = request.user
+        all_schoolclass = user.schoolclasses.all()
+        all_project = {}
+        for schoolclass in all_schoolclass:
+            class_project = Project.objects.filter(schoolclass=schoolclass)
+            print(class_project)
+            all_project[schoolclass.name] = class_project
+        
+        context = {
+            'all_project': all_project,
+            'pk': pk,
+        }
+        
+        return render(request, "all_project.html", context=context)
     else:
         return redirect('index')
 
