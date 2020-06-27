@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <head>
+        <h1>Classes</h1>
+        <link rel="stylesheet" href="{% static 'css/schoolclass.css' %}">
+    </head>
+
+    <body>
+        {% for schoolclass in all_schoolclass %}
+            
+        <div class="object-box">
+            <div class="object-name-box">
+                <div class="name">
+                            <a class="white-link" href="{% url "view_schoolclass" schoolclass.pk %}">
+                            <b>{{ schoolclass.name }}</b>
+                            </a>  
+                        <div class = "link"> 
+                            <a class="white-link" href={% url 'students' schoolclass.pk %}>  
+                                {{ schoolclass.student_count }}                        
+                                <img 
+                                    class='icon'
+                                    src="\media\vector_icons\user-solid.svg" 
+                                />
+                            </a> 
+                        </div>
+                </div>
+            </div>
+
+            {% if user == schoolclass.teacher %}
+            <div class="name">
+                <a href={% url "enrollment" schoolclass.pk %}> Student Enrollment 
+                    <img 
+                        class='icon'
+                        src="\media\vector_icons\user-plus-solid.svg" 
+                    />
+                </a>
+            </div>
+            {% endif %} 
+
+            <div class="name">
+                {% if user == schoolclass.teacher %}
+                    <a href={% url 'class_mission' schoolclass.pk %}> Mission 
+                        <img 
+                            class='icon'
+                            src="\media\vector_icons\file-solid.svg" 
+                        />
+                    </a>
+                {% else %}
+                    <a href={% url 'all_mission' %}> Mission 
+                        <img 
+                            class='icon'
+                            src="\media\vector_icons\file-solid.svg" 
+                        />
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {% endfor %}  
+        
+        {% if user == schoolclass.teacher %}
+            <div class="add-class">
+                <form method="POST" action="{% url 'all_schoolclass' %}">
+                    {% csrf_token %}
+
+                    <div class="add-class-form">
+
+                    {{ class_form }}
+                    
+                    <button type="submit" class="createbtn"><b>+</b></button>
+
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </body>
+</div>
+{% endblock %}

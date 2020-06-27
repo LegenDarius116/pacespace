@@ -1,0 +1,25 @@
+body {
+    background-image: url(/media/background_img/space-landscape-illustration.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-family: 'Saira Semi Condensed';
+    font-size: 16px;
+}
+
+div.schoolclass {
+    width: 100%;
+    border: 3px solid #949599;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #ffffffcb;
+}
+
+h1 {
+    color: white;
+    text-shadow: 1px 0 0 #5c5c5c, 0 -1px 0 #5c5c5c, 0 1px 0 #5c5c5c, -1px 0 0 #5c5c5c;
+}
+
+h3 {
+    color: black;
+}

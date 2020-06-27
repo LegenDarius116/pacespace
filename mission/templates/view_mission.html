@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <head>
+        <h1>Mission: {{mission.name}}</h1>
+        <link rel="stylesheet" href="{% static 'css/mission.css' %}">
+    </head>
+
+    <body>
+        <div class="object-box">
+            <div class='object-box-inside'>
+                <h3>Details</h3>
+                <ul class='mission_attribs'>
+                    <li>Name: {{mission.name}}</li>
+                    <li>Description: {{mission.description}}</li>
+                    <li>Instructions: <a href='{{ MEDIA_URL }}{{mission.instructions.url}}'>{{ mission.instructions.name }}</a></li>
+                    <li>Date Due: {{mission.date_due}}</li>
+                </ul>
+            </div>
+        </div>
+
+        {% if all_submission %}
+            <div class="object-box" id='submission'>
+                <div class='object-box-inside'>
+                    <h3>Submissions</h3>
+                    {% for submission in all_submission %}
+                    <ul class='submission_attribs'>
+                        {% if user.is_teacher %}
+                        <li>Student: <i>Username</i> <b>{{submission.student.username}}</b> <i>Full Name</i> <b>{{submission.student.first_name}} {{submission.student.last_name}}</b></li>
+                        {% endif %}
+                        <li>Message: {{mission.description}}</li>
+                        <li>Submission: <a href='{{ MEDIA_URL }}{{submission.file_submission.url}}'>{{ submission.file_submission.name }}</a></li>
+                        <li>Date Submitted: {{submission.date_submit}}</li>
+                    </ul> 
+                    {% endfor %}           
+                </div>
+            </div>
+        {% endif %}
+
+        {% if user.is_student %}
+        <div class="new_submission">
+            <form method="POST" action="{% url 'view_mission' mission.pk %}" enctype="multipart/form-data" >
+                {% csrf_token %}
+                {{submission_form}}
+                <button type="submit"><b>Submit</b></button>
+
+            </form>
+        </div>
+        {% endif %}
+    </body>
+</div>
+{% endblock content %}

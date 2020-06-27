@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'landing',
     'authentication',
     'dashboard',
+    'schoolclass',
+    'project',
+    'roster',
 
     # 3rd party apps
     'crispy_forms',
@@ -85,6 +88,9 @@ TEMPLATES = [
         },
     },
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 WSGI_APPLICATION = 'pacespace.wsgi.application'
 
