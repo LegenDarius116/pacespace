@@ -16,15 +16,11 @@
                     <table id = "mission-table" class="table table-condensed table-hover table-striped ng-table">
                         <tr class = "table_header">
                             <th>Name</th>
-                            <th>Class</th>
-                            <th>Status</th>
                             <th>Date Due</th>
                         <tr>
                         {% for mission in all_mission %}
                         <tr>
                             <td class = "name"><a class='mission' href={% url 'view_mission' mission.pk %}>{{mission.name}}</a></td>
-                            <td class = "schoolclass"><a class='schoolclass' href={% url 'view_schoolclass' mission.schoolclass.pk %}>{{mission.schoolclass.name}}</a></td>
-                            <td class = "status">{{mission.get_status_display}}</td>
                             <td class = "date_due">{{mission.date_due}}</td>
                         <tr>
                         {% endfor %}
@@ -36,8 +32,21 @@
 
 
     {% else %}
-        <p>There are no missions!</p>
+        <p>There are no missions! Create one</p>
     {% endif %}
+    {% comment %} Overdue {% endcomment %}
+
+    {% comment %} Submitted {% endcomment %}
+    <form method="POST" action="{% url 'class_mission' pk %}" enctype="multipart/form-data" >
+        {% csrf_token %}
+        
+        {{ create_mission_form }}
+
+        <button type="submit" class="createbtn"><b>+</b></button>
+
+    </form>
+    
+
     </body>
 
 </div>

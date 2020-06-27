@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
+    <head>
+        <h1>Mission: {{mission.name}}</h1>
+        <link rel="stylesheet" href="{% static 'css/mission.css' %}">
+    </head>
+
     <div class="object-box">
-        This is a dummy page.
+        <ul class='mission_attribs'>
+            <li>Name: {{mission.name}}</li>
+            <li>Description: {{mission.description}}</li>
+            <li>Instructions: {{mission.instructions}}</li>
+            <li>Status: {{mission.get_status_display}}</li>
+            <li>Date Due: {{mission.date_due}}</li>
+        </ul>
     </div>
 
 </div>

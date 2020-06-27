@@ -4,32 +4,18 @@ from database.models import SchoolClass, Mission, PaceUser
 from database.user_functions import *
 from .forms import CreateMissionForm, SubmitMissionForm
 import datetime 
+from database.helper import parse_req_body
+from django.contrib import messages 
 
-STATUS_CHOICES = [
-    ('A', 'Assigned'),
-    ('S', 'Submitted'),
-    ('O', 'Overdue'),
-    ('SL', 'Submitted Late')
-]    
-
-status = models.CharField(
-    max_length=2,
-    choices=STATUS_CHOICES,
-    default="A"
-)
-
-def all_mission(request, pk):
+def class_mission(request, pk):
     if request.user.is_authenticated:
-        user = request.user
-        schoolclass = user.schoolclasses.get(pk=pk)
-        if schoolclass is not None:
+        user = request.user   
+        schoolclass = SchoolClass.objects.get(pk=pk)
+        if user == schoolclass.teacher:
             all_mission = Mission.objects.filter(schoolclass__pk=pk)
 
             if request.method == 'GET':
-                if user == schoolclass.teacher:
-                    create_mission_form = CreateMissionForm()
-                else:
-                    create_mission_form = None
+                create_mission_form = CreateMissionForm()
 
                 context = {
                     'all_mission': all_mission,
@@ -38,29 +24,24 @@ def all_mission(request, pk):
                 }
 
             else:
-                create_mission_form = CreateMissionForm(data=request.POST)
-                try:
-                    if create_mission_form.is_valid():
-                        name = create_mission_form.cleaned_data["name"]
-                        description = create_mission_form.cleaned_data["description"]
-                        instructions = create_mission_form.cleaned_data["instructions"]
-                        date_due = create_mission_form.clean_date()
-                        mission = Mission(
-                            name=name, 
-                            description=description,
-                            instructions=instructions,
-                            date_due=date_due,
-                            schoolclass=schoolclass,
-                        )
-                        mission.save()
-                        print('success mission saved')
-                    else:
-                        print('not valid form')
-                except:
-                    import traceback
-                    traceback.print_exc()
-                    return render(request, "all_schoolclass.html")
-            
+                form = CreateMissionForm(request.POST, request.FILES)
+                if form.is_valid():
+                    name = form.cleaned_data["name"]
+                    description = form.cleaned_data['description']
+                    instructions = form.cleaned_data['instructions']
+                    date_due = form.cleaned_data['date_due']
+                    schoolclass = schoolclass
+
+                    mission = Mission(
+                        name=name, 
+                        description=description,
+                        instructions=instructions,
+                        date_due=date_due,
+                        schoolclass=schoolclass,
+                    )
+                    mission.save()
+                    print('success mission saved')
+                
                 all_mission = Mission.objects.filter(schoolclass__pk=pk)
                 create_mission_form = CreateMissionForm()
 
@@ -69,10 +50,10 @@ def all_mission(request, pk):
                     'pk': pk,
                     'create_mission_form': create_mission_form,
                 }
-            
-            return render(request, "all_mission.html", context=context)
+                
+            return render(request, "class_mission.html", context=context)
         else:
-            print('Not in this class!')
+            print('Not teacher of this class')
             return redirect('all_schoolclass')
     else:
         return redirect('index')
@@ -90,3 +71,13 @@ def view_mission(request, pk):
         return redirect('index')    
 
 # def calendar(request):
+
+def all_mission(request):
+    if request.user.is_authenticated:
+        user=request.user
+        all_mission = Mission.objects.filter(schoolclass__paceuser=user)
+        context = {
+            'all_mission': all_mission,
+        }
+        print(context)
+        return render(request, "all_mission.html", context=context)

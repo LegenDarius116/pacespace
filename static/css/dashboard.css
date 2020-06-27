@@ -1,10 +1,5 @@
-head.h1 {
-    color: black;
-}
-
 body {
-    background-image: url(/media/background_img/space_hello.png);
-    background-size: 100%;
+    background-image: url(/media/background_img/space-landscape-illustration.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     font-family: 'Saira Semi Condensed';
@@ -16,6 +11,7 @@ div.schoolclass {
     border: 3px solid #949599;
     border-radius: 14px;
     padding: 20px;
+    margin-bottom: 20px;
     background-color: #ffffffcb;
 }
 

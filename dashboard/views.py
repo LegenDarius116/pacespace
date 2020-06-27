@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
-
+from database.models import PaceUser, Mission
 
 @login_required
 def dashboard(request):
@@ -10,18 +10,21 @@ def dashboard(request):
     TODO: dashboard will list classes that the user is associated with.
     """
     # get user type
-    if request.user.is_student:
+    user = request.user
+    if user.is_student:
         user_type = "Student"
-    elif request.user.is_teacher:
+    elif user.is_teacher:
         user_type = "Teacher"
     else:
         user_type = "Admin"
 
+    all_mission = Mission.objects.filter(schoolclass__paceuser=user)
+
     context = {
-        'user_name': request.user.username,
         'user_type': user_type,
-        'user': request.user,
-        'classes': request.user.schoolclasses.all(),
+        'user': user,
+        'classes': user.schoolclasses.all(),
+        'all_mission': all_mission,
     }
 
-    return render(request, 'dashboard/dashboard.html', context=context)
+    return render(request, 'dashboard.html', context=context)

@@ -1,22 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
 <div class="container">
-    <h2>
-        Class: {{ schoolclass.name }}
-        Teacher: {{ schoolclass.teacher }}
-    </h2>
-    <p> {{ request.user }} in class? {{ is_enrolled }}</p>
-
-    {% if request.user == schoolclass.teacher %}
-    <p> is teacher of class </p>
-    {% else %}
-    <p> not teacher of class </p>
-    {% endif %}
-    <div class="assignment">
-    
-    </div>
+    <head>
+        <h1>Class: {{ schoolclass.name }}</h2>
+        <h3>Teacher: {{ schoolclass.teacher }}</h3>
+        <link rel="stylesheet" href="{% static 'css/schoolclass.css' %}">
+    </head>
 
     <div class="delete">
         {% if request.user.is_teacher and  request.user == schoolclass.teacher %}

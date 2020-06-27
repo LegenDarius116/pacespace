@@ -5,7 +5,7 @@
 <div class="container">
     <head>
         <h1>Classes</h1>
-        <link rel="stylesheet" href="{% static 'css/all_schoolclass.css' %}">
+        <link rel="stylesheet" href="{% static 'css/schoolclass.css' %}">
     </head>
 
     <body>
@@ -41,31 +41,42 @@
             {% endif %} 
 
             <div class="name">
-                <a href={% url 'all_mission' schoolclass.pk %}> Mission 
-                    <img 
-                        class='icon'
-                        src="\media\vector_icons\file-solid.svg" 
-                    />
-                </a>
+                {% if user == schoolclass.teacher %}
+                    <a href={% url 'class_mission' schoolclass.pk %}> Mission 
+                        <img 
+                            class='icon'
+                            src="\media\vector_icons\file-solid.svg" 
+                        />
+                    </a>
+                {% else %}
+                    <a href={% url 'all_mission' %}> Mission 
+                        <img 
+                            class='icon'
+                            src="\media\vector_icons\file-solid.svg" 
+                        />
+                    </a>
+                {% endif %}
             </div>
 
         </div>
 
         {% endfor %}  
         
-        <div class="add-class">
-            <form method="POST" action="{% url 'all_schoolclass' %}">
-                {% csrf_token %}
+        {% if user == schoolclass.teacher %}
+            <div class="add-class">
+                <form method="POST" action="{% url 'all_schoolclass' %}">
+                    {% csrf_token %}
 
-                <div class="add-class-form">
+                    <div class="add-class-form">
 
-                {{ class_form }}
-                
-                <button type="submit" class="createbtn"><b>+</b></button>
+                    {{ class_form }}
+                    
+                    <button type="submit" class="createbtn"><b>+</b></button>
 
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </body>
 </div>
 {% endblock %}
