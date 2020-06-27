@@ -2,7 +2,7 @@ from django.db import models
 from django.shortcuts import render, redirect
 from database.models import SchoolClass, Mission, PaceUser
 from database.user_functions import *
-from .forms import CreateMissionForm, SubmitMissionForm
+from .forms import CreateMissionForm, SubmissionForm
 import datetime 
 from database.helper import parse_req_body
 from django.contrib import messages 
@@ -60,12 +60,34 @@ def class_mission(request, pk):
 
 def view_mission(request, pk):
     if request.user.is_authenticated:
-        # user = request.user
-        # if in user.schoolclass
+        user = request.user
         mission = Mission.objects.get(pk=pk)
+
+        if request.method=='POST':
+            form = SubmissionForm(request.POST, request.FILES)
+            if form.is_valid():    
+                message=form.cleaned_data['message']
+                file_submission=form.cleaned_data['file_submission']
+
+                submission = MissionSubmission(
+                    student=user,
+                    mission=mission,
+                    message=message,
+                    file_submission=file_submission,
+                )
+                submission.save()
+        
+        if user.is_student:
+            all_submission = MissionSubmission.objects.filter(student=user).filter(mission=mission)
+        else:
+            all_submission = MissionSubmission.objects.filter(mission=mission)
+        submission_form = SubmissionForm()
         context = {
-            'mission':mission,
+            'mission': mission,
+            'all_submission': all_submission,
+            'submission_form': submission_form,
         }
+        
         return render(request, "view_mission.html", context=context)
     else:
         return redirect('index')    

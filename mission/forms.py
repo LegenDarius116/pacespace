@@ -31,21 +31,27 @@ class CreateMissionForm(forms.Form):
         valid = super(CreateMissionForm, self).is_valid()
         if not valid:
             print(self.errors)
-            # for field in self.errors.keys():
-            #     if isinstance(field, dict):
-            #         print('dict')
-            #     else:
-            #         print("ValidationError: {0}[{1}] <- \"{2}\" {3}", 
-            #             type(self),
-            #             field,
-            #             self.data[field],
-            #             self.errors[field].as_text()
-            #         )
         return valid
 
-class SubmitMissionForm(forms.Form):
-    file_field = forms.FileField(
+class SubmissionForm(forms.Form):
+    file_submission = forms.FileField(
+        label='Submission',
         widget=forms.ClearableFileInput(attrs={
             'multiple': True,
-        }))
-    message = forms.CharField(max_length=500)
+            'class':'file_input',
+        })
+    )
+    message = forms.CharField(
+        max_length=500,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'Leave a message',
+            }
+        )
+    )
+
+    def is_valid(self):
+        valid = super(SubmissionForm, self).is_valid()
+        if not valid:
+            print(self.errors)
+        return valid

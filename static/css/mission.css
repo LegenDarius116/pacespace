@@ -3,10 +3,15 @@ body{
     background-position: center center;
     font-family: 'Saira Semi Condensed';
     font-size: 16px;    
+    color: black;
 }
 
-h1,h2,h3,p,label {
+h1,label {
     color: white;
+}
+
+h3 {
+    color:black;
 }
 
 label {
@@ -25,5 +30,8 @@ div.mission-list {
     font-size: 20px;
 }
 
+div.object-box-inside {
+    padding: 20px;
+}
 
 

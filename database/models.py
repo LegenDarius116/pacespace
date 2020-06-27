@@ -17,25 +17,18 @@ class SchoolClass(models.Model):
         return reverse('view_schoolclass', args=self.pk)
 
 
-# use to specify directory path for mission uploads
 def user_directory_path(instance, filename):
+    '''use to specify directory path for mission creation'''
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.schoolclass.teacher.id, filename)
 
+def submission_directory_path(instance, filename):
+    '''use to specify directory path for mission submission'''
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.student.id, filename)
+
 
 class Mission(models.Model):
-    STATUS_CHOICES = [
-        ('A', 'Assigned'),
-        ('S', 'Submitted'),
-        ('O', 'Overdue'),
-        ('SL', 'Submitted Late')
-    ]    
-
-    status = models.CharField(
-        max_length=2,
-        choices=STATUS_CHOICES,
-        default="A"
-    )
     name = models.TextField(default='Mission')
     description = models.TextField(default='', null=True, blank=True)
     instructions = models.FileField(upload_to=user_directory_path, null=True, blank=True)
@@ -46,9 +39,6 @@ class Mission(models.Model):
     def get_absolute_url(self):
         return reverse('view_mission', kwargs={'pk_class': self.schoolclass.pk, 'pk_mission':self.pk})
 
-    def update_status_no_submission(self):
-        if date.today > self.date_due:
-            self.status = "O"
 
 
 class PaceUser(AbstractUser):
@@ -61,6 +51,7 @@ class MissionSubmission(models.Model):
     """A mission submission given by a Student"""
     student = models.ForeignKey(PaceUser, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
-    date_submit = models.DateField()
-    content = models.TextField(default='')
+    date_submit = models.DateField(auto_now_add=True)
+    message = models.TextField(default='')
+    file_submission = models.FileField(upload_to=submission_directory_path, null=True, blank=True)
     grade = models.IntegerField(default=-1)

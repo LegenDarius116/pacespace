@@ -17,14 +17,12 @@
                         <tr class = "table_header">
                             <th>Name</th>
                             <th>Class</th>
-                            <th>Status</th>
                             <th>Date Due</th>
                         <tr>
                         {% for mission in all_mission %}
                         <tr>
                             <td class = "name"><a class='mission' href={% url 'view_mission' mission.pk %}>{{mission.name}}</a></td>
                             <td class = "schoolclass"><a class='schoolclass' href={% url 'view_schoolclass' mission.schoolclass.pk %}>{{mission.schoolclass.name}}</a></td>
-                            <td class = "status">{{mission.get_status_display}}</td>
                             <td class = "date_due">{{mission.date_due}}</td>
                         <tr>
                         {% endfor %}
